@@ -6,7 +6,8 @@ export default function UserManagement() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    api.getTeamMembers('accepted')
+    api
+      .getTeamMembers('accepted')
       .then(setMembers)
       .catch(() => setError('Error fetching team members'));
   }, []);
