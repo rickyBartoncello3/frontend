@@ -5,7 +5,7 @@ module.exports = (env, argv) => {
   const isProd = argv.mode === 'production';
 
   return {
-    entry: path.resolve(__dirname, 'src', 'index.js'),
+entry: path.resolve(__dirname, 'src', 'index.tsx'),
 
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -30,20 +30,25 @@ module.exports = (env, argv) => {
     },
 
     module: {
-  rules: [
-    {
-      test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
-      use: 'babel-loader',
+      rules: [
+        {
+          test: /\.(ts|tsx)$/,
+  exclude: /node_modules/,
+  use: {
+    loader: 'ts-loader',
+    options: {
+      transpileOnly: true
+    }
+  }
+        },
+        {
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader'],
+        },
+      ],
     },
-    {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader'],
+    resolve: {
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
     },
-  ],
-},
-resolve: {
-  extensions: ['.js', '.jsx'],
-},
   };
 };
